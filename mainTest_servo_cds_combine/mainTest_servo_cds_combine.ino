@@ -31,10 +31,10 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  mainCds();
+  mainCdsServo();
 }
 
-void mainCds(){
+void mainCdsServo(){
     if(Serial1.available()){
       char mainBtn = Serial1.read();
       // 암막 up
@@ -46,7 +46,7 @@ void mainCds(){
             sv2_up.write(is_checked);
             delay(wait);
             sv2_up.write(is_not_checked);
-          } else if(mainBtn == '2'){
+          } else if(mainBtn == '2'){      // 조도센서
               int sensor = analogRead(A0);
               if(sensor >= 500){
                 Serial.println("Red");
