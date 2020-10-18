@@ -1,8 +1,8 @@
 #include <SoftwareSerial.h>
 #include <Servo.h>
 
-Servo sv1_up;
-Servo sv2_up;
+Servo sv1_up, sv2_up;
+//Servo sv1_down, sv2_down;
 
 // 서보모터 각도값 변수
 int is_checked = 10;    // 버튼 클릭시 서보모터 10도 작동
@@ -10,7 +10,7 @@ int is_not_checked = 0; // 버튼 클릭 안했을 떄 서보모터 0도 작동
 
 // 서보모터 delay 시간 값(10초)
 int wait = 500;
-int sensorValue = 0;
+//int sensorValue = 0;
 
 void setup() {
   // put your setup code here, to run once:
