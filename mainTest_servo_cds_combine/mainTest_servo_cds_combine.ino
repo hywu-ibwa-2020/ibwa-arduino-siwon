@@ -8,7 +8,7 @@ Servo sv1_up, sv2_up;
 int is_checked = 10;    // 버튼 클릭시 서보모터 10도 작동
 int is_not_checked = 0; // 버튼 클릭 안했을 떄 서보모터 0도 작동
 
-// 서보모터 delay 시간 값(10초)
+// 서보모터 delay 시간 값
 int wait = 500;
 //int sensorValue = 0;
 
@@ -31,10 +31,10 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  mainCdsServo();
+  operateMotorsCds();
 }
 
-void mainCdsServo(){
+void operateMotorsCds(){
     if(Serial1.available()){
       delay(100); // 모든 데이터 수신완료 될 때까지 대기
       String mainBtn = Serial1.readStringUntil('\n');
