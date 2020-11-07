@@ -1,14 +1,9 @@
 #include "TM1637.h" 
 
-//{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20}; 
-//0~9,A,b,C,d,E,F,"-"," ",degree,r,h 
-
-
 #define CLK 24//Pins for TM1637        
 #define DIO 2
 
 TM1637 tm1637(CLK,DIO); 
-
 
 // Date and time functions using a DS3231 RTC connected via I2C and Wire lib 
 
@@ -18,9 +13,6 @@ RTC_DS3231 rtc;
 
 int hh, mm;  
 
-
-
- 
 
 void setup() 
   { 
@@ -41,32 +33,7 @@ void setup()
 void loop(){ 
   DateTime now = rtc.now(); 
   hh = now.hour(), DEC; 
-  
-
-/*12시간표기를 위해 삽입*/
-//
-//  if (now.hour() > 12 )
-//
-//{
-//
-//hh = now.hour() - 12;
-//
-//}
-//
-//else
-//
-//{
-//
-//hh = now.hour();
-//
-//}
-
-/*여기까지*/
-
-
-
   mm = now.minute(), DEC; 
-
 
   tm1637.point(POINT_ON); 
   if ((hh/10) == 0) tm1637.display(0,17); 
@@ -85,4 +52,5 @@ void loop(){
       tm1637.display(2,mm/10);    // minutes 
       tm1637.display(3,mm%10);    //  
   delay(500); 
+  
   }// end loop()
