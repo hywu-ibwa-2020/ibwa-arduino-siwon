@@ -1,7 +1,6 @@
 #include <SoftwareSerial.h>
 #include <Servo.h>
 #include <Adafruit_NeoPixel.h>
-//#include <string.h>
 
 #define LED_PIN 6
 #define LED_COUNT 15
