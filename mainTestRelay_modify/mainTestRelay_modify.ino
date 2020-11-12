@@ -5,8 +5,8 @@
 #include <string.h>
 
 
-//#define LED_PIN 6
-//#define LED_COUNT 15
+#define LED_PIN 6
+#define LED_COUNT 15
 
 #define HalfDN 3  // 반암막 ir센서 
 #define HalfUP 4
