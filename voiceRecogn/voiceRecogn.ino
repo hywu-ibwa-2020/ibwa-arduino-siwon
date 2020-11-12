@@ -1,24 +1,22 @@
 #include <SoftwareSerial.h>
-#include <Servo.h>
 #include <Adafruit_NeoPixel.h>
 
 #define LED_PIN 6
 #define LED_COUNT 15
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, NEO_RGBW + NEO_KHZ800);
-Servo sv1_up, sv2_up;
-Servo sv1_down, sv2_down;
 
-
-// 서보모터 각도값 변수
-int is_checked = 30;    // 버튼 클릭시 서보모터 10도 작동
-int is_not_checked = 0; // 버튼 클릭 안했을 떄 서보모터 0도 작동
-
-// 서보모터 delay 시간 값
-int wait = 5000;
 
 int voice_recogn=0;
 
+#define HalfDN 3  // 반암막 ir센서 
+#define HalfUP 4
+#define ScreenDN 6  // 암막
+#define ScreenUP 7  // 암막
+#define IN1 50   // 반암막 IN1 DOWN
+#define IN2 51   // 반암막 IN2 UP 
+#define IN3 52
+#define IN4 53
 
 // custom function 선언
 void colorWipe(uint32_t c, int colorWait);
@@ -33,15 +31,14 @@ void setup() {
   Serial.begin(9600);
   Serial2.begin(9600);
   
-  sv1_up.attach(22);    // 서보모터 핀넘버
-  sv1_down.attach(23);
-  sv2_up.attach(24);
-  sv2_down.attach(25);
-
-  sv1_up.write(0);        // 서보모터 각도 초기화
-  sv1_down.write(0);
-  sv2_up.write(0);
-  sv2_down.write(0);
+  pinMode(HalfDN, INPUT);
+  pinMode(HalfUP, INPUT);
+  pinMode(ScreenDN, INPUT);
+  pinMode(ScreenUP, INPUT);
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
 
   strip.begin(); //네오픽셀을 초기화하기 위해 모든LED를 off시킨다
   strip.show(); 
@@ -77,21 +74,39 @@ void loop() {
      switch(voice_recogn)
      {
        case 0x11:
-         Serial.println("둘 다 내려");
-         sv1_down.write(is_checked);
-         sv2_down.write(is_checked);
-         delay(wait);
-         sv1_down.write(is_not_checked);
-         sv2_down.write(is_not_checked);
+        if(digitalRead(HalfDN) && !digitalRead(HalfUP) && digitalRead(ScreenDN) && !digitalRead(ScreenUP)){
+        Serial.println("1, 2번 커튼을 모두 내립니다.");
+        digitalWrite(IN1, HIGH);
+        digitalWrite(IN2, LOW);
+        digitalWrite(IN3, HIGH);
+        digitalWrite(IN4, LOW);
+        while(digitalRead(HalfDN) && !digitalRead(HalfUP) && digitalRead(ScreenDN) && !digitalRead(ScreenUP));
+        if(!digitalRead(HalfDN) && !digitalRead(HalfUP) && !digitalRead(ScreenDN) && !digitalRead(ScreenUP)){
+          digitalWrite(IN1, HIGH);
+          digitalWrite(IN2, HIGH);
+          digitalWrite(IN3, HIGH);
+          digitalWrite(IN4, HIGH);     
+          while(!digitalRead(HalfDN) && !digitalRead(HalfUP) && !digitalRead(ScreenDN) && !digitalRead(ScreenUP));
+      }  
+    }  
          break;
        
        case 0x12:
          Serial.println("둘 다 올려");
-         sv1_up.write(is_checked);
-         sv2_up.write(is_checked);
-         delay(wait);
-         sv1_up.write(is_not_checked);
-         sv2_up.write(is_not_checked);
+        if(!digitalRead(HalfDN) && !digitalRead(HalfUP) && !digitalRead(ScreenDN) && !digitalRead(ScreenUP)){
+        digitalWrite(IN1, LOW);
+        digitalWrite(IN2, HIGH);
+        digitalWrite(IN3, LOW);
+        digitalWrite(IN4, HIGH);
+        while(!digitalRead(HalfDN) && !digitalRead(HalfUP) && !digitalRead(ScreenDN) && !digitalRead(ScreenUP));
+        if(digitalRead(HalfDN) && !digitalRead(HalfUP) && digitalRead(ScreenDN) && !digitalRead(ScreenUP)){
+          digitalWrite(IN1, HIGH);
+          digitalWrite(IN2, HIGH);
+          digitalWrite(IN3, HIGH);
+          digitalWrite(IN4, HIGH);
+          while(digitalRead(HalfDN) && !digitalRead(HalfUP) && digitalRead(ScreenDN) && !digitalRead(ScreenUP));
+          }      
+    }
          break;
   
        case 0x13:
@@ -108,7 +123,7 @@ void loop() {
             
        case 0x15:
          Serial.println("막내 실행");
-         Serial1.println("막내 실행");
+         Serial1.println("막내실행");
   
     }
    }
