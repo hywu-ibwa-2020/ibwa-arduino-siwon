@@ -9,10 +9,6 @@
 
 int voice_recogn=0;
 
-//#define HalfDN 6  // 근접센서
-//#define HalfUP 5
-//#define ScreenDN 4
-//#define ScreenUP 7
 #define IN2 50    // 릴레이
 #define IN1 51
 #define IN4 52
@@ -37,22 +33,6 @@ int snowy = 24;
 int rainy = 29;
 int lightning = 26;
 int sunset = 25;
-
-//// ir센서 초기값
-//int voiceHalfDN, voiceHalfUP, voiceScreenDN, voiceScreenUP = 0;
-//int voiceHalfDN2, voiceHalfUP2, voiceScreenDN2, voiceScreenUP2 = 0;
-//int m01HalfDN, m01HalfUP, m01ScreenDN, m01ScreenUP = 0;
-//int m02HalfDN, m02HalfUP, m02ScreenDN, m02ScreenUP = 0;
-//int m03HalfDN, m03HalfUP, m03ScreenDN, m03ScreenUP = 0;
-//int m04HalfDN, m04HalfUP, m04ScreenDN, m04ScreenUP = 0;
-//int m05HalfDN, m05HalfUP, m05ScreenDN, m05ScreenUP = 0;
-//int m06HalfDN, m06HalfUP, m06ScreenDN, m06ScreenUP = 0;
-//int c1upHalfDN, c1upHalfUP = 0;
-//int c2upScreenDN, c2upScreenUP = 0;
-//int c1downHalfDN, c1downHalfUP = 0;
-//int c2downScreenDN, c2downScreenUP = 0;
-//int c12upHalfDN, c12upHalfUP, c12upScreenDN, c12upScreenUP = 0;
-//int c12downHalfDN, c12downHalfUP, c12downScreenDN, c12downScreenUP = 0;
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, NEO_RGBW + NEO_KHZ800);
 SoftwareSerial DFPlayerSerial(10, 11); // DFPlayer RX, TX
@@ -83,21 +63,10 @@ void setup() {
   mp3_set_volume (17);                // 볼륨 설정 (0~30)
 //  mp3_pause();
   
-//  pinMode(HalfDN, INPUT);
-//  pinMode(HalfUP, INPUT);
-//  pinMode(ScreenDN, INPUT);
-//  pinMode(ScreenUP, INPUT);
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
   pinMode(IN3, OUTPUT);
   pinMode(IN4, OUTPUT);
-
-//  for(int i=4; i<8; i++){
-//  pinMode(i, INPUT);
-//  }
-//  for(int i=50; i<54; i++){
-//  pinMode(i, OUTPUT);
-//  }
 
   pinMode(sunny, OUTPUT);
   pinMode(cloudy, OUTPUT);
